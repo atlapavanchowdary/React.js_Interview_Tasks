@@ -1,1 +1,54 @@
+// Write a simple React.js code on list of items where each list has an input box to enter string, submit and delete buttons
+// And on clicking submit output should be displayed.
 
+import React, { useState } from "react";
+
+function ListItem({ item, onDelete }) {
+  return (
+    <li>
+      {item}
+      <button onClick={onDelete}>Delete</button>
+    </li>
+  );
+}
+
+function List() {
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputValue.trim() !== "") {
+      setItems([...items, inputValue]);
+      setInputValue("");
+    }
+  };
+
+  const handleDelete = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <ul>
+        {items.map((item, index) => (
+          <ListItem
+            key={index}
+            item={item}
+            onDelete={() => handleDelete(index)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+export default List;
