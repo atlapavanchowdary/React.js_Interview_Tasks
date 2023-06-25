@@ -1,5 +1,4 @@
-// Write a simple React.js code on list of items where each list has an input box to enter string, submit and delete buttons
-// And on clicking submit output should be displayed.
+// React.js code to display list of items where each list is submitted through a input box and delete button is adjoint with each list item.
 
 import React, { useState } from "react";
 
