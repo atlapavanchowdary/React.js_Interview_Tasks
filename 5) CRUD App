@@ -1,0 +1,63 @@
+//Simple CRUD(Create, Read, Update, Delete) App
+
+import React, { useState } from "react";
+
+function CRUDApp() {
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [editIndex, setEditIndex] = useState(-1);
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleAddItem = () => {
+    if (inputValue.trim() !== "") {
+      if (editIndex === -1) {
+        setItems([...items, inputValue]);
+      } else {
+        const updatedItems = [...items];
+        updatedItems[editIndex] = inputValue;
+        setItems(updatedItems);
+        setEditIndex(-1);
+      }
+      setInputValue("");
+    }
+  };
+
+  const handleEditItem = (index) => {
+    debugger;
+    setEditIndex(index);
+    setInputValue(items[index]);
+  };
+
+  const handleDeleteItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+  };
+
+  return (
+    <div>
+      <h2>Simple CRUD App</h2>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Enter item"
+      />
+      <button onClick={handleAddItem}>
+        {editIndex === -1 ? "Add" : "Update"}
+      </button>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            {item}
+            <button onClick={() => handleEditItem(index)}>Edit</button>
+            <button onClick={() => handleDeleteItem(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+export default CRUDApp;
