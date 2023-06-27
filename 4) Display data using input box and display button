@@ -1,1 +1,26 @@
+// Given a input box and display button. Display the data which is entered in input box and submitted
+
+import React, { useState } from "react";
+
+function DataDisplay() {
+  const [inputValue, setInputValue] = useState("");
+  const [displayData, setDisplayData] = useState("");
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+  const handleDisplay = () => {
+    setDisplayData(inputValue);
+  };
+
+  return (
+    <div>
+      <input type="text" value={inputValue} onChange={handleInputChange} />
+      <button onClick={handleDisplay}>Display</button>
+      <p>{displayData}</p>
+    </div>
+  );
+}
+
+export default DataDisplay;
 
