@@ -1,1 +1,77 @@
+// simple reactjs program to add, delete (or) disable drop-downs.
 
+import React, { useState } from "react";
+
+function Dropdown({ id, options, disabled, onDelete, onDisable }) {
+  return (
+    <div>
+      <select id={id} disabled={disabled}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <button onClick={onDelete}>Delete</button>
+      <button onClick={onDisable}>Disable</button>
+    </div>
+  );
+}
+
+function Dropdowns() {
+  const [dropdowns, setDropdowns] = useState([]);
+  const [counter, setCounter] = useState(0);
+
+  const handleAddDropdown = () => {
+    setDropdowns([
+      ...dropdowns,
+      {
+        id: counter,
+        options: [
+          { value: "option1", label: "Option 1" },
+          { value: "option2", label: "Option 2" },
+          { value: "option3", label: "Option 3" },
+        ],
+        disabled: false,
+      },
+    ]);
+    setCounter(counter + 1);
+  };
+
+  const handleDeleteDropdown = (dropdownId) => {
+    const updatedDropdowns = dropdowns.filter(
+      (dropdown) => dropdown.id !== dropdownId
+    );
+    setDropdowns(updatedDropdowns);
+  };
+
+  const handleDisableDropdown = (dropdownId) => {
+    const updatedDropdowns = dropdowns.map((dropdown) => {
+      if (dropdown.id === dropdownId) {
+        return {
+          ...dropdown,
+          disabled: true,
+        };
+      }
+      return dropdown;
+    });
+    setDropdowns(updatedDropdowns);
+  };
+
+  return (
+    <div>
+      <button onClick={handleAddDropdown}>Add Dropdown</button>
+      {dropdowns.map((dropdown) => (
+        <Dropdown
+          key={dropdown.id}
+          id={`dropdown-${dropdown.id}`}
+          options={dropdown.options}
+          disabled={dropdown.disabled}
+          onDelete={() => handleDeleteDropdown(dropdown.id)}
+          onDisable={() => handleDisableDropdown(dropdown.id)}
+        />
+      ))}
+    </div>
+  );
+}
+export default Dropdowns;
